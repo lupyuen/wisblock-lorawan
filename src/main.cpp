@@ -38,7 +38,7 @@
 //  TODO: Set this to your LoRaWAN Region
 LoRaMacRegion_t g_CurrentRegion = LORAMAC_REGION_AS923;
 
-//  Set to true to select Over-The-Air Activation (OTAA)
+//  Set to true to select Over-The-Air Activation (OTAA), false for Activation By Personalisation (ABP)
 bool doOTAA = true;
 
 //  TODO: (For OTAA Only) Set the OTAA keys. KEYS ARE MSB !!!!
@@ -107,6 +107,7 @@ static uint32_t timers_init(void);
 static uint32_t count = 0;
 static uint32_t count_fail = 0;
 
+// At startup, we join the LoRaWAN network, in either OTAA or ABP mode
 void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -210,6 +211,7 @@ void setup()
   lmh_join();
 }
 
+// Nothing here for now
 void loop()
 {
   // Put your application tasks here, like reading of sensors,
@@ -220,6 +222,7 @@ void loop()
  */
 void lorawan_has_joined_handler(void)
 {
+  // When we have joined the LoRaWAN network, start a 20-second timer
   Serial.println("OTAA Mode, Network Joined!");
 
   lmh_error_status ret = lmh_class_request(g_CurrentClass);
@@ -235,6 +238,7 @@ void lorawan_has_joined_handler(void)
 */
 static void lorawan_join_failed_handler(void)
 {
+  // If we can't join the LoRaWAN network, show the error
   Serial.println("OTAA join failed!");
   Serial.println("Check your EUI's and Keys's!");
   Serial.println("Check if a Gateway is in range!");
@@ -244,13 +248,14 @@ static void lorawan_join_failed_handler(void)
  *
  * @param[in] app_data  Pointer to rx data
  */
-
 void lorawan_rx_handler(lmh_app_data_t *app_data)
 {
+  // When we receive a LoRaWAN Packet from the LoRaWAN Gateway, display it
   Serial.printf("LoRa Packet received on port %d, size:%d, rssi:%d, snr:%d, data:%s\n",
           app_data->port, app_data->buffsize, app_data->rssi, app_data->snr, app_data->buffer);
 }
 
+// Callback Function that is called when we have joined the LoRaWAN network with a LoRaWAN Class
 void lorawan_confirm_class_handler(DeviceClass_t Class)
 {
   Serial.printf("switch to class %c done\n", "ABC"[Class]);
@@ -260,6 +265,7 @@ void lorawan_confirm_class_handler(DeviceClass_t Class)
   lmh_send(&m_lora_app_data, g_CurrentConfirm);
 }
 
+// This is called when the 20-second timer expires. We send a LoRaWAN Packet.
 void send_lora_frame(void)
 {
   if (lmh_join_status_get() != LMH_SET)
@@ -296,6 +302,7 @@ void send_lora_frame(void)
  */
 void tx_lora_periodic_handler(void)
 {
+  // When the 20-second timer has expired, send a LoRaWAN Packet and restart the timer
   TimerSetValue(&appTimer, LORAWAN_APP_INTERVAL);
   TimerStart(&appTimer);
   Serial.println("Sending frame now...");

@@ -1,5 +1,5 @@
 //  Based on https://github.com/RAKWireless/WisBlock/blob/master/examples/RAK4630/communications/LoRa/LoRaWAN/LoRaWAN_OTAA_ABP/LoRaWAN_OTAA_ABP.ino
-//  Note: This program SX126x-Arduino 2.0.0 or later. In platformio.ini, set...
+//  Note: This program needs SX126x-Arduino Library version 2.0.0 or later. In platformio.ini, set...
 //    lib_deps = beegee-tokyo/SX126x-Arduino@^2.0.0
 /**
  * @file LoRaWAN_OTAA_ABP.ino

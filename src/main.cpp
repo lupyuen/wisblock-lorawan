@@ -33,16 +33,36 @@
 #define LED_BUILTIN2 36
 #endif
 
-bool doOTAA = true;   // OTAA is used by default.
+//  TODO: Set this to your LoRaWAN Region
+LoRaMacRegion_t g_CurrentRegion = LORAMAC_REGION_AS923;
+
+//  Set to true to select Over-The-Air Activation (OTAA)
+bool doOTAA = true;
+
+//  TODO: (For OTAA Only) Set the OTAA keys. KEYS ARE MSB !!!!
+
+//  Device EUI: Copy from ChirpStack: Applications -> app -> Device EUI
+uint8_t nodeDeviceEUI[8] = {0x4b, 0xc1, 0x5e, 0xe7, 0x37, 0x7b, 0xb1, 0x5b};
+
+//  App EUI: Not needed for ChirpStack, set to default 0000000000000000
+uint8_t nodeAppEUI[8]    = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+//  App Key: Copy from ChirpStack: Applications -> app -> Devices -> device_otaa_class_a -> Keys (OTAA) -> Application Key
+uint8_t nodeAppKey[16]   = {0xaa, 0xff, 0xad, 0x5c, 0x7e, 0x87, 0xf6, 0x4d, 0xe3, 0xf0, 0x87, 0x32, 0xfc, 0x1d, 0xd2, 0x5d};
+
+//  TODO: (For ABP Only) Set the ABP keys
+uint32_t nodeDevAddr    = 0x260116F8;
+uint8_t nodeNwsKey[16]  = {0x7E, 0xAC, 0xE2, 0x55, 0xB8, 0xA5, 0xE2, 0x69, 0x91, 0x51, 0x96, 0x06, 0x47, 0x56, 0x9D, 0x23};
+uint8_t nodeAppsKey[16] = {0xFB, 0xAC, 0xB6, 0x47, 0xF3, 0x58, 0x45, 0xC7, 0x50, 0x7D, 0xBF, 0x16, 0x8B, 0xA8, 0xC1, 0x7C};
+
 #define SCHED_MAX_EVENT_DATA_SIZE APP_TIMER_SCHED_EVENT_DATA_SIZE /**< Maximum size of scheduler events. */
 #define SCHED_QUEUE_SIZE 60										  /**< Maximum number of events in the scheduler queue. */
 #define LORAWAN_DATERATE DR_0									  /*LoRaMac datarates definition, from DR_0 to DR_5*/
-#define LORAWAN_TX_POWER TX_POWER_5							/*LoRaMac tx power definition, from TX_POWER_0 to TX_POWER_15*/
+#define LORAWAN_TX_POWER TX_POWER_5							      /*LoRaMac tx power definition, from TX_POWER_0 to TX_POWER_15*/
 #define JOINREQ_NBTRIALS 3										  /**< Number of trials for the join request. */
-DeviceClass_t g_CurrentClass = CLASS_A;					/* class definition*/
-LoRaMacRegion_t g_CurrentRegion = LORAMAC_REGION_EU868;    /* Region:EU868*/
+DeviceClass_t g_CurrentClass = CLASS_A;					          /* class definition*/
 lmh_confirm g_CurrentConfirm = LMH_UNCONFIRMED_MSG;				  /* confirm/unconfirm packet definition*/
-uint8_t gAppPort = LORAWAN_APP_PORT;							        /* data port*/
+uint8_t gAppPort = LORAWAN_APP_PORT;							  /* data port*/
 
 /**@brief Structure containing LoRaWan parameters, needed for lmh_init()
 */
@@ -60,20 +80,6 @@ static void send_lora_frame(void);
 static lmh_callback_t g_lora_callbacks = {BoardGetBatteryLevel, BoardGetUniqueId, BoardGetRandomSeed,
                                         lorawan_rx_handler, lorawan_has_joined_handler, lorawan_confirm_class_handler, lorawan_join_failed_handler
                                        };
-//OTAA keys !!!! KEYS ARE MSB !!!!
-//  Device EUI: Copy from ChirpStack: Applications -> app -> Device EUI
-uint8_t nodeDeviceEUI[8] = {0x4b, 0xc1, 0x5e, 0xe7, 0x37, 0x7b, 0xb1, 0x5b};
-
-//  App EUI: Not needed for ChirpStack, set to default 0000000000000000
-uint8_t nodeAppEUI[8]    = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-//  App Key: Copy from ChirpStack: Applications -> app -> Devices -> device_otaa_class_a -> Keys (OTAA) -> Application Key
-uint8_t nodeAppKey[16]   = {0xaa, 0xff, 0xad, 0x5c, 0x7e, 0x87, 0xf6, 0x4d, 0xe3, 0xf0, 0x87, 0x32, 0xfc, 0x1d, 0xd2, 0x5d};
-
-// ABP keys
-uint32_t nodeDevAddr = 0x260116F8;
-uint8_t nodeNwsKey[16] = {0x7E, 0xAC, 0xE2, 0x55, 0xB8, 0xA5, 0xE2, 0x69, 0x91, 0x51, 0x96, 0x06, 0x47, 0x56, 0x9D, 0x23};
-uint8_t nodeAppsKey[16] = {0xFB, 0xAC, 0xB6, 0x47, 0xF3, 0x58, 0x45, 0xC7, 0x50, 0x7D, 0xBF, 0x16, 0x8B, 0xA8, 0xC1, 0x7C};
 
 // Private defination
 #define LORAWAN_APP_DATA_BUFF_SIZE 64                     /**< buffer size of the data to be transmitted. */

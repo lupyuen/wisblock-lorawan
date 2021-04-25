@@ -208,6 +208,7 @@ void setup()
   }
 
   // Start Join procedure
+  Serial.println("Joining LoRaWAN network...");
   lmh_join();
 }
 

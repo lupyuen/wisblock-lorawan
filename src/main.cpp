@@ -1,4 +1,6 @@
 //  Based on https://github.com/RAKWireless/WisBlock/blob/master/examples/RAK4630/communications/LoRa/LoRaWAN/LoRaWAN_OTAA_ABP/LoRaWAN_OTAA_ABP.ino
+//  Note: This program SX126x-Arduino 2.0.0 or later. In platformio.ini, set...
+//    lib_deps = beegee-tokyo/SX126x-Arduino@^2.0.0
 /**
  * @file LoRaWAN_OTAA_ABP.ino
  * @author rakwireless.com
@@ -66,7 +68,14 @@ uint8_t gAppPort = LORAWAN_APP_PORT;							  /* data port*/
 
 /**@brief Structure containing LoRaWan parameters, needed for lmh_init()
 */
-static lmh_param_t g_lora_param_init = {LORAWAN_ADR_ON, LORAWAN_DATERATE, LORAWAN_PUBLIC_NETWORK, JOINREQ_NBTRIALS, LORAWAN_TX_POWER, LORAWAN_DUTYCYCLE_OFF};
+static lmh_param_t g_lora_param_init = {
+    LORAWAN_ADR_ON, 
+    LORAWAN_DATERATE, 
+    LORAWAN_PUBLIC_NETWORK, 
+    JOINREQ_NBTRIALS, 
+    LORAWAN_TX_POWER, 
+    LORAWAN_DUTYCYCLE_OFF
+};
 
 // Foward declaration
 static void lorawan_has_joined_handler(void);
@@ -77,9 +86,15 @@ static void send_lora_frame(void);
 
 /**@brief Structure containing LoRaWan callback functions, needed for lmh_init()
 */
-static lmh_callback_t g_lora_callbacks = {BoardGetBatteryLevel, BoardGetUniqueId, BoardGetRandomSeed,
-                                        lorawan_rx_handler, lorawan_has_joined_handler, lorawan_confirm_class_handler, lorawan_join_failed_handler
-                                       };
+static lmh_callback_t g_lora_callbacks = {
+    BoardGetBatteryLevel, 
+    BoardGetUniqueId, 
+    BoardGetRandomSeed,
+    lorawan_rx_handler, 
+    lorawan_has_joined_handler, 
+    lorawan_confirm_class_handler, 
+    lorawan_join_failed_handler
+};
 
 // Private defination
 #define LORAWAN_APP_DATA_BUFF_SIZE 64                     /**< buffer size of the data to be transmitted. */
@@ -177,8 +192,14 @@ void setup()
     lmh_setDevAddr(nodeDevAddr);
   }
 
-  // Initialize LoRaWan
-  err_code = lmh_init(&g_lora_callbacks, g_lora_param_init, doOTAA, g_CurrentClass, g_CurrentRegion);
+  // Initialize LoRaWaN
+  err_code = lmh_init(  //  lmh_init now takes 3 parameters instead of 5
+    &g_lora_callbacks,  //  Callbacks 
+    g_lora_param_init,  //  Functions
+    doOTAA,             //  Set to true for OTAA
+    g_CurrentClass,     //  Class 
+    g_CurrentRegion     //  Region
+  );
   if (err_code != 0)
   {
     Serial.printf("lmh_init failed - %d\n", err_code);
@@ -209,6 +230,7 @@ void lorawan_has_joined_handler(void)
     TimerStart(&appTimer);
   }
 }
+
 /**@brief LoRa function for handling OTAA join failed
 */
 static void lorawan_join_failed_handler(void)
@@ -217,10 +239,12 @@ static void lorawan_join_failed_handler(void)
   Serial.println("Check your EUI's and Keys's!");
   Serial.println("Check if a Gateway is in range!");
 }
+
 /**@brief Function for handling LoRaWan received data from Gateway
  *
  * @param[in] app_data  Pointer to rx data
  */
+
 void lorawan_rx_handler(lmh_app_data_t *app_data)
 {
   Serial.printf("LoRa Packet received on port %d, size:%d, rssi:%d, snr:%d, data:%s\n",

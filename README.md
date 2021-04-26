@@ -16,6 +16,10 @@ In [`platformio.ini`](platformio.ini) set...
 lib_deps = beegee-tokyo/SX126x-Arduino@^2.0.0
 ```
 
+Follow the Twitter Thread...
+
+https://twitter.com/MisterTechBlog/status/1379926160377851910
+
 # Output Log
 
 ```text

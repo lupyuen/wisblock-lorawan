@@ -67,6 +67,78 @@ error="validate dev-nonce error: object already exists"
 
 Because the Nonce should not be reused.
 
+# Log Transmitted Packets
+
+To log transmitted packets, modify
+
+`.pio/libdeps/wiscore_rak4631/SX126x-Arduino/src/mac/LoRaMac.cpp`
+
+```c
+LoRaMacStatus_t SendFrameOnChannel(uint8_t channel)
+{
+    TxConfigParams_t txConfig;
+    int8_t txPower = 0;
+
+    txConfig.Channel = channel;
+    txConfig.Datarate = LoRaMacParams.ChannelsDatarate;
+    txConfig.TxPower = LoRaMacParams.ChannelsTxPower;
+    txConfig.MaxEirp = LoRaMacParams.MaxEirp;
+    txConfig.AntennaGain = LoRaMacParams.AntennaGain;
+    txConfig.PktLen = LoRaMacBufferPktLen;
+
+    // If we are connecting to a single channel gateway we use always the same predefined channel and datarate
+    if (singleChannelGateway)
+    {
+        txConfig.Channel = singleChannelSelected;
+        txConfig.Datarate = singleChannelDatarate;
+    }
+
+    RegionTxConfig(LoRaMacRegion, &txConfig, &txPower, &TxTimeOnAir);
+
+    MlmeConfirm.Status = LORAMAC_EVENT_INFO_STATUS_ERROR;
+    McpsConfirm.Status = LORAMAC_EVENT_INFO_STATUS_ERROR;
+    McpsConfirm.Datarate = LoRaMacParams.ChannelsDatarate;
+    McpsConfirm.TxPower = txPower;
+
+    // Store the time on air
+    McpsConfirm.TxTimeOnAir = TxTimeOnAir;
+    MlmeConfirm.TxTimeOnAir = TxTimeOnAir;
+
+    // Starts the MAC layer status check timer
+    TimerSetValue(&MacStateCheckTimer, MAC_STATE_CHECK_TIMEOUT);
+    TimerStart(&MacStateCheckTimer);
+
+    if (IsLoRaMacNetworkJoined != JOIN_OK)
+    {
+        JoinRequestTrials++;
+    }
+
+    //////////////// INSERT THIS CODE
+
+    // To replay a Join Network Request...
+    // if (LoRaMacBuffer[0] == 0) {
+    // 	static uint8_t replay[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x5b, 0xb1, 0x7b, 0x37, 0xe7, 0x5e, 0xc1, 0x4b, 0x67, 0xaa, 0xbb, 0x07, 0x70, 0x7d};
+    // 	memcpy(LoRaMacBuffer, replay, LoRaMacBufferPktLen);
+    // }
+
+    // To dump transmitted packets...
+    printf("RadioSend: size=%d\r\n", (int) LoRaMacBufferPktLen);
+    for (int i = 0; i < LoRaMacBufferPktLen; i++) {
+        printf("%02x ", LoRaMacBuffer[i]);
+    }
+    printf("\r\n");
+    
+    //////////////// END OF INSERTION
+
+    // Send now
+    Radio.Send(LoRaMacBuffer, LoRaMacBufferPktLen);
+
+    LoRaMacState |= LORAMAC_TX_RUNNING;
+
+    return LORAMAC_STATUS_OK;
+}
+```
+
 # Output Log
 
 ```text

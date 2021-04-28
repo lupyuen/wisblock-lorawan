@@ -122,7 +122,7 @@ LoRaMacStatus_t SendFrameOnChannel(uint8_t channel)
     // }
 
     // To dump transmitted packets...
-    printf("RadioSend: size=%d\r\n", (int) LoRaMacBufferPktLen);
+    printf("RadioSend: size=%d, channel=%d, datarate=%d, txpower=%d, maxeirp=%d, antennagain=%d\r\n", (int) LoRaMacBufferPktLen, (int) txConfig.Channel, (int) txConfig.Datarate, (int) txConfig.TxPower, (int) txConfig.MaxEirp, (int) txConfig.AntennaGain);
     for (int i = 0; i < LoRaMacBufferPktLen; i++) {
         printf("%02x ", LoRaMacBuffer[i]);
     }

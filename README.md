@@ -160,8 +160,8 @@ AppEui=00-00-00-00-00-00-00-00
 AppKey=AA-FF-AD-5C-7E-87-F6-4D-E3-F0-87-32-FC-1D-D2-5D
 <LMH> Selected subband 1
 Joining LoRaWAN network...
-RadioSend: size=23
-00 00 00 00 00 00 00 00 00 5b b1 7b 37 e7 5e c1 4b 55 ed 7e 9b d6 af 
+RadioSend: size=23, channel=0, datarate=2, txpower=0, maxeirp=16, antennagain=2
+00 00 00 00 00 00 00 00 00 5b b1 7b 37 e7 5e c1 4b 11 55 64 87 df 23 
 <LM> OnRadioTxDone
 <LM> OnRadioTxDone => RX Windows #1 5002 #2 6002
 <LM> OnRadioTxDone => TX was Join Request
@@ -169,24 +169,24 @@ RadioSend: size=23
 <LM> OnRadioRxDone => FRAME_TYPE_JOIN_ACCEPT
 OTAA Mode, Network Joined!
 Sending frame now...
-RadioSend: size=19
-40 4a f9 43 00 80 00 00 02 ba 3f 06 65 98 72 bc a2 27 0b 
+RadioSend: size=19, channel=1, datarate=2, txpower=0, maxeirp=16, antennagain=2
+40 90 55 da 01 80 00 00 02 7e 15 c3 33 8d 1e fe df 69 bf 
 lmh_send ok count 1
 <LM> OnRadioTxDone
 <LM> OnRadioTxDone => RX Windows #1 1002 #2 2002
 <RADIO> RadioIrqProcess => IRQ_RX_TX_TIMEOUT
 <LM> OnRadioRxTimeout
 Sending frame now...
-RadioSend: size=19
-40 4a f9 43 00 80 01 00 02 b9 97 59 b5 bb b1 00 f1 88 36 
+RadioSend: size=19, channel=7, datarate=2, txpower=0, maxeirp=16, antennagain=2
+40 90 55 da 01 80 01 00 02 bf ce af 66 4a 90 3c 38 11 ca 
 lmh_send ok count 2
 <LM> OnRadioTxDone
 <LM> OnRadioTxDone => RX Windows #1 1002 #2 2002
 <RADIO> RadioIrqProcess => IRQ_RX_TX_TIMEOUT
 <LM> OnRadioRxTimeout
 Sending frame now...
-RadioSend: size=19
-40 4a f9 43 00 80 02 00 02 24 9f 11 8d 4f 78 a7 67 49 18 
+RadioSend: size=19, channel=7, datarate=2, txpower=0, maxeirp=16, antennagain=2
+40 90 55 da 01 80 02 00 02 47 d6 3a 4f e2 a0 d2 a3 e0 d1 
 lmh_send ok count 3
 <LM> OnRadioTxDone
 <LM> OnRadioTxDone => RX Windows #1 1002 #2 2002

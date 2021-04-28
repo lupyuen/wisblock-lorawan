@@ -20,6 +20,53 @@ Follow the Twitter Thread...
 
 https://twitter.com/MisterTechBlog/status/1379926160377851910
 
+# Message Integrity Code Errors
+
+To search for Message Integrity Code errors in LoRaWAN Packets received by WisGate, SSH to WisGate and search for...
+
+```bash
+# grep MIC /var/log/syslog
+
+Apr 28 04:02:05 rak-gateway 
+chirpstack-application-server[568]: 
+time="2021-04-28T04:02:05+01:00" 
+level=error 
+msg="invalid MIC" 
+dev_eui=4bc15ee7377bb15b 
+type=DATA_UP_MIC
+
+Apr 28 04:02:05 rak-gateway 
+chirpstack-network-server[1378]: 
+time="2021-04-28T04:02:05+01:00" 
+level=error 
+msg="uplink: processing uplink frame error"
+ctx_id=0ccd1478-3b79-4ded-9e26-a28e4c143edc 
+error="get device-session error: invalid MIC"
+```
+
+The error above occurs when we replay a repeated Join Network Request to our LoRaWAN Gateway (with same Nonce, same Message Integrity Code).
+
+This replay also logs a Nonce Error in WisGate...
+
+```bash
+# grep nonce /var/log/syslog
+
+Apr 28 04:02:41 rak-gateway chirpstack-application-server[568]:
+time="2021-04-28T04:02:41+01:00" 
+level=error 
+msg="validate dev-nonce error" 
+dev_eui=4bc15ee7377bb15b 
+type=OTAA
+
+Apr 28 04:02:41 rak-gateway chirpstack-network-server[1378]:
+time="2021-04-28T04:02:41+01:00" 
+level=error 
+msg="uplink: processing uplink frame error" ctx_id=01ae296e-8ce1-449a-83cc-fb0771059d89 
+error="validate dev-nonce error: object already exists"
+```
+
+Because the Nonce should not be reused.
+
 # Output Log
 
 ```text

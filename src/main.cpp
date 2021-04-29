@@ -276,7 +276,6 @@ void send_lora_frame(void)
   }
 
   // Copy "Hello!" into the transmit buffer
-  uint32_t i = 0;
   m_lora_app_data.port = gAppPort;
   memset(m_lora_app_data.buffer, 0, LORAWAN_APP_DATA_BUFF_SIZE);
   memcpy(m_lora_app_data.buffer, "Hello!", 6);

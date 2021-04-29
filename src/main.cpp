@@ -271,21 +271,18 @@ void send_lora_frame(void)
 {
   if (lmh_join_status_get() != LMH_SET)
   {
-    //Not joined, try again later
+    // Not joined, try again later
     return;
   }
 
+  // Copy "Hello!" into the transmit buffer
   uint32_t i = 0;
-  memset(m_lora_app_data.buffer, 0, LORAWAN_APP_DATA_BUFF_SIZE);
   m_lora_app_data.port = gAppPort;
-  m_lora_app_data.buffer[i++] = 'H';
-  m_lora_app_data.buffer[i++] = 'e';
-  m_lora_app_data.buffer[i++] = 'l';
-  m_lora_app_data.buffer[i++] = 'l';
-  m_lora_app_data.buffer[i++] = 'o';
-  m_lora_app_data.buffer[i++] = '!';
-  m_lora_app_data.buffsize = i;
+  memset(m_lora_app_data.buffer, 0, LORAWAN_APP_DATA_BUFF_SIZE);
+  memcpy(m_lora_app_data.buffer, "Hello!", 6);
+  m_lora_app_data.buffsize = 6;
 
+  // Transmit the LoRaWAN Packet
   lmh_error_status error = lmh_send(&m_lora_app_data, g_CurrentConfirm);
   if (error == LMH_SUCCESS)
   {

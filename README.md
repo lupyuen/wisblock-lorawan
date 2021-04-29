@@ -1,12 +1,10 @@
 # wisblock-lorawan
 
-Arduino LoRaWAN client for [RAKwireless WisBlock RAK4630](https://docs.rakwireless.com/Product-Categories/WisBlock/Quickstart/).
+Arduino LoRaWAN client for [RAKwireless WisBlock RAK4631](https://docs.rakwireless.com/Product-Categories/WisBlock/RAK4631/Overview/).
 
-https://github.com/RAKWireless/WisBlock/tree/master/examples/RAK4630/communications/LoRa/LoRaWAN
+Read the article...
 
-Based on...
-
-https://github.com/RAKWireless/WisBlock/blob/master/examples/RAK4630/communications/LoRa/LoRaWAN/LoRaWAN_OTAA_ABP/LoRaWAN_OTAA_ABP.ino
+["Build a LoRaWAN Network with RAKwireless WisGate Developer Gateway"](https://lupyuen.github.io/articles/wisgate)
 
 Note: This program needs SX126x-Arduino Library version 2.0.0 or later. 
 

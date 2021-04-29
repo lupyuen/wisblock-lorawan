@@ -6,6 +6,8 @@ Read the article...
 
 ["Build a LoRaWAN Network with RAKwireless WisGate Developer Gateway"](https://lupyuen.github.io/articles/wisgate)
 
+[Watch the demo video on YouTube](https://youtu.be/xdyi6XCo8Z8)
+
 Note: This program needs SX126x-Arduino Library version 2.0.0 or later. 
 
 In [`platformio.ini`](platformio.ini) set...

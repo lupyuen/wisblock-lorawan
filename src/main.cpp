@@ -251,7 +251,8 @@ static void lorawan_join_failed_handler(void)
  */
 void lorawan_rx_handler(lmh_app_data_t *app_data)
 {
-  // When we receive a LoRaWAN Packet from the LoRaWAN Gateway, display it
+  // When we receive a LoRaWAN Packet from the LoRaWAN Gateway, display it.
+  // TODO: Ensure that app_data->buffer is null-terminated.
   Serial.printf("LoRa Packet received on port %d, size:%d, rssi:%d, snr:%d, data:%s\n",
           app_data->port, app_data->buffsize, app_data->rssi, app_data->snr, app_data->buffer);
 }

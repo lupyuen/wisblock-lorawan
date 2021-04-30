@@ -257,7 +257,7 @@ void lorawan_rx_handler(lmh_app_data_t *app_data)
           app_data->port, app_data->buffsize, app_data->rssi, app_data->snr, app_data->buffer);
 }
 
-// Callback Function that is called when we have joined the LoRaWAN network with a LoRaWAN Class
+// Callback Function that is called when the LoRaWAN Class has been changed
 void lorawan_confirm_class_handler(DeviceClass_t Class)
 {
   Serial.printf("switch to class %c done\n", "ABC"[Class]);

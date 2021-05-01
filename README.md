@@ -162,6 +162,7 @@ SX126xSetTxParams: power=0, rampTime=4
 SX126xSetPaConfig: paDutyCycle=4, hpMax=7, deviceSel=0, paLut=1 
 RadioSetModem
 RadioSetModem
+RadioSetPublicNetwork: public syncword=3444
 RadioSetChannel: freq=923200000
 RadioSetTxConfig: modem=1, power=13, fdev=0, bandwidth=0, datarate=10, coderate=1, preambleLen=8, fixLen=0, crcOn=1, freqHopOn=0, hopPeriod=0, iqInverted=0, timeout=3000
 RadioSetTxConfig: SpreadingFactor=10, Bandwidth=4, CodingRate=1, LowDatarateOptimize=0, PreambleLength=8, HeaderType=0, PayloadLength=255, CrcMode=1, InvertIQ=0
@@ -170,37 +171,38 @@ RadioSetModem
 SX126xSetTxParams: power=13, rampTime=2
 SX126xSetPaConfig: paDutyCycle=4, hpMax=7, deviceSel=0, paLut=1 
 RadioSetModem
+RadioSetPublicNetwork: public syncword=3444
 <LMH> Selected subband 1
 Joining LoRaWAN network...
 RadioSetModem
-RadioSetChannel: freq=923400000
+RadioSetChannel: freq=923200000
 RadioSetTxConfig: modem=1, power=13, fdev=0, bandwidth=0, datarate=10, coderate=1, preambleLen=8, fixLen=0, crcOn=1, freqHopOn=0, hopPeriod=0, iqInverted=0, timeout=3000
 RadioSetTxConfig: SpreadingFactor=10, Bandwidth=4, CodingRate=1, LowDatarateOptimize=0, PreambleLength=8, HeaderType=0, PayloadLength=0, CrcMode=1, InvertIQ=0
 RadioStandby
 RadioSetModem
 SX126xSetTxParams: power=13, rampTime=2
 SX126xSetPaConfig: paDutyCycle=4, hpMax=7, deviceSel=0, paLut=1 
-RadioSend: size=23, channel=1, datarate=2, txpower=0, maxeirp=16, antennagain=2
-00 00 00 00 00 00 00 00 00 5b b1 7b 37 e7 5e c1 4b 36 65 61 49 88 07 
+RadioSend: size=23, channel=0, datarate=2, txpower=0, maxeirp=16, antennagain=2
+00 00 00 00 00 00 00 00 00 5b b1 7b 37 e7 5e c1 4b a4 61 b3 2a f7 0b 
 RadioSend: PreambleLength=8, HeaderType=0, PayloadLength=23, CrcMode=1, InvertIQ=0
 <LM> OnRadioTxDone
 <LM> OnRadioTxDone => RX Windows #1 5002 #2 6002
 <LM> OnRadioTxDone => TX was Join Request
-RadioSetChannel: freq=923400000
+RadioSetChannel: freq=923200000
 RadioSetModem
 <LM> OnRadioRxDone
 <LM> OnRadioRxDone => FRAME_TYPE_JOIN_ACCEPT
 OTAA Mode, Network Joined!
 Sending frame now...
 RadioSetChannel: freq=923400000
-RadioSetTxConfig: modem=1, power=13, fdev=0, bandwidth=0, datara, hopPeriod=0, iqInverted=0, timeout=3000
-RadioSetTxConfig: SpreadingFactor=10, Bandwidth=4, CodingRate=1, LowDatarateOptimize=0, ertIQ=0
+RadioSetTxConfig: modem=1, power=13, fdev=0, bandwidth=0, datarate=10, coderate=1, preambleLen=8, fixLen=0, crcOn=1, freqHopOn=0, hopPeriod=0, iqInverted=0, timeout=3000
+RadioSetTxConfig: SpreadingFactor=10, Bandwidth=4, CodingRate=1, LowDatarateOptimize=0, PreambleLength=8, HeaderType=0, PayloadLength=72, CrcMode=1, InvertIQ=0
 RadioStandby
 RadioSetModem
-dLength=72, CrcMode=1, SX126xSetTxParams: power=13, rampTime=2
+SX126xSetTxParams: power=13, rampTime=2
 SX126xSetPaConfig: paDutyCycle=4, hpMax=7, deviceSel=0, paLut=1 
 RadioSend: size=19, channel=1, datarate=2, txpower=0, maxeirp=16, antennagain=2
-40 fc 58 6d 00 80 00 00 02 10 ba 00 65 a5 2a bd ed 36 27 
+40 00 6c af 00 80 00 00 02 68 22 96 50 a0 df e3 2a bf c7 
 RadioSend: PreambleLength=8, HeaderType=0, PayloadLength=19, CrcMode=1, InvertIQ=0
 lmh_send ok count 1
 <LM> OnRadioTxDone
@@ -210,38 +212,38 @@ RadioSetModem
 <RADIO> RadioIrqProcess => IRQ_RX_TX_TIMEOUT
 <LM> OnRadioRxTimeout
 Sending frame now...
-RadioSetChannel: freq=923400000
+RadioSetChannel: freq=923600000
 RadioSetTxConfig: modem=1, power=13, fdev=0, bandwidth=0, datarate=10, coderate=1, preambleLen=8, fixLen=0, crcOn=1, freqHopOn=0, hopPeriod=0, iqInverted=0, timeout=3000
 RadioSetTxConfig: SpreadingFactor=10, Bandwidth=4, CodingRate=1, LowDatarateOptimize=0, PreambleLength=8, HeaderType=0, PayloadLength=72, CrcMode=1, InvertIQ=0
 RadioStandby
 RadioSetModem
 SX126xSetTxParams: power=13, rampTime=2
 SX126xSetPaConfig: paDutyCycle=4, hpMax=7, deviceSel=0, paLut=1 
-RadioSend: size=19, channel=1, datarate=2, txpower=0, maxeirp=16, antennagain=2
-40 fc 58 6d 00 80 01 00 02 ea bf 1a 96 e7 4d 76 eb 2c dd 
+RadioSend: size=19, channel=2, datarate=2, txpower=0, maxeirp=16, antennagain=2
+40 00 6c af 00 80 01 00 02 d2 50 48 d0 d1 40 e7 5b fa a0 
 RadioSend: PreambleLength=8, HeaderType=0, PayloadLength=19, CrcMode=1, InvertIQ=0
 lmh_send ok count 2
 <LM> OnRadioTxDone
 <LM> OnRadioTxDone => RX Windows #1 1002 #2 2002
-RadioSetChannel: freq=923400000
+RadioSetChannel: freq=923600000
 RadioSetModem
 <RADIO> RadioIrqProcess => IRQ_RX_TX_TIMEOUT
 <LM> OnRadioRxTimeout
 Sending frame now...
-RadioSetChannel: freq=924600000
+RadioSetChannel: freq=924400000
 RadioSetTxConfig: modem=1, power=13, fdev=0, bandwidth=0, datarate=10, coderate=1, preambleLen=8, fixLen=0, crcOn=1, freqHopOn=0, hopPeriod=0, iqInverted=0, timeout=3000
 RadioSetTxConfig: SpreadingFactor=10, Bandwidth=4, CodingRate=1, LowDatarateOptimize=0, PreambleLength=8, HeaderType=0, PayloadLength=72, CrcMode=1, InvertIQ=0
 RadioStandby
 RadioSetModem
 SX126xSetTxParams: power=13, rampTime=2
 SX126xSetPaConfig: paDutyCycle=4, hpMax=7, deviceSel=0, paLut=1 
-RadioSend: size=19, channel=7, datarate=2, txpower=0, maxeirp=16, antennagain=2
-40 fc 58 6d 00 80 02 00 02 83 7b e1 dc cc f3 84 89 b9 e8 
+RadioSend: size=19, channel=6, datarate=2, txpower=0, maxeirp=16, antennagain=2
+40 00 6c af 00 80 02 00 02 4b 06 43 1e bb 9f 43 38 8f 87 
 RadioSend: PreambleLength=8, HeaderType=0, PayloadLength=19, CrcMode=1, InvertIQ=0
 lmh_send ok count 3
 <LM> OnRadioTxDone
 <LM> OnRadioTxDone => RX Windows #1 1002 #2 2002
-RadioSetChannel: freq=924600000
+RadioSetChannel: freq=924400000
 RadioSetModem
 <RADIO> RadioIrqProcess => IRQ_RX_TX_TIMEOUT
 <LM> OnRadioRxTimeout
